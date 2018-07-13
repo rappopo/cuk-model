@@ -8,15 +8,15 @@ module.exports = function(cuk) {
       const options = helper('core:merge')(params, { collection: _.snakeCase(name) }),
         schema = helper('model:getSchema')(name)
       let finalResult
-      const dab = helper('model:getConnectorByModel')(name)
-      helper('model:getHook')(name, 'beforeValidate')(body, param)
+      const dab = helper('model:getDab')(name)
+      helper('model:getHook')(name, 'beforeValidate')(body, options)
       .then(result => {
-        const e = dab.validateDoc(body, params)
+        const e = dab.validateDoc(body, options)
         if (e) return reject(e)
-        return helper('model:getHook')(name, 'afterValidate')(body, param)
+        return helper('model:getHook')(name, 'afterValidate')(body, options)
       })
       .then(result => {
-        return helper('model:getHook')(name, 'beforeUpdate')(id, body, param)
+        return helper('model:getHook')(name, 'beforeUpdate')(id, body, options)
       })
       .then(result => {
         let newBody = _.isPlainObject(result) ? (result.body || body) : body
@@ -24,15 +24,15 @@ module.exports = function(cuk) {
           if (['updatedAt'].indexOf(k) > -1)
             newBody[v] = new Date()
         })
-        return dab.update(id, newBody, params)
+        return dab.update(id, newBody, options)
       })
       .then(result => {
         finalResult = result
-        return helper('model:getHook')(name, 'afterUpdate')(id, body, _.cloneDeep(result), param)
+        return helper('model:getHook')(name, 'afterUpdate')(id, body, _.cloneDeep(result), options)
       })
       .then(result => {
         finalResult = _.isPlainObject(result) ? (result.result || finalResult) : finalResult
-        resolve(result)
+        resolve(finalResult)
       })
       .catch(reject)
     })

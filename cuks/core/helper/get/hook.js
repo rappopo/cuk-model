@@ -1,6 +1,7 @@
 'use strict'
 
 module.exports = function(cuk) {
+  const { _, helper } = cuk.pkg.core.lib
 
   return (name, hook) => {
     const names = helper('core:utilSplitPkgToken')(name)

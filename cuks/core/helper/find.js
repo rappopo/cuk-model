@@ -6,7 +6,7 @@ module.exports = function(cuk) {
   return (name, params = {}) => {
     return new Promise((resolve, reject) => {
       let options = helper('core:merge')(params, { collection: _.snakeCase(name) })
-      helper('model:getConnectorByModel')(name)
+      helper('model:getDab')(name)
       .find(options)
       .then(result => {
         resolve(result)

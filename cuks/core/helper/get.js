@@ -5,7 +5,7 @@ module.exports = function(cuk) {
 
   return name => {
     return {
-      dab: helper('model:getConnectorByModel')(name),
+      dab: helper('model:getDab')(name),
       schema: helper('model:getSchema')(name),
       hook: hook => helper('model:getHook')(name, hook),
       find: params => helper('model:find')(name, params),

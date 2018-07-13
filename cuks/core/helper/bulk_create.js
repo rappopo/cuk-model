@@ -8,8 +8,8 @@ module.exports = function(cuk) {
       const options = helper('core:merge')(params, { collection: _.snakeCase(name) }),
         schema = helper('model:getSchema')(name)
       let finalResult
-      const dab = helper('model:getConnectorByModel')(name)
-      helper('model:getHook')(name, 'beforeBulkCreate')(body, param)
+      const dab = helper('model:getDab')(name)
+      helper('model:getHook')(name, 'beforeBulkCreate')(body, options)
       .then(result => {
         let newBody = _.isPlainObject(result) ? (result.body || body) : body
         /*
@@ -18,15 +18,15 @@ module.exports = function(cuk) {
             newBody[v] = new Date()
         })
         */
-        return dab.bulkCreate(newBody, params)
+        return dab.bulkCreate(newBody, options)
       })
       .then(result => {
         finalResult = result
-        return helper('model:getHook')(name, 'afterBulkCreate')(body, _.cloneDeep(result), param)
+        return helper('model:getHook')(name, 'afterBulkCreate')(body, _.cloneDeep(result), options)
       })
       .then(result => {
         finalResult = _.isPlainObject(result) ? (result.result || finalResult) : finalResult
-        resolve(result)
+        resolve(finalResult)
       })
       .catch(reject)
     })
