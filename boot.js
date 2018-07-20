@@ -15,6 +15,9 @@ module.exports = function(cuk){
       return require('./lib/make_hook')(cuk)
     })
     .then(() => {
+      return require('./lib/make_fixture')(cuk)
+    })
+    .then(() => {
       resolve(true)
     })
     .catch(reject)
