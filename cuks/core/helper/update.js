@@ -32,13 +32,22 @@ module.exports = function(cuk) {
         return helper('model:getHook')(name, 'beforeUpdate')(id, body, options)
       })
       .then(result => {
+        let excludeFullReplace = _.get(schema, 'exclude.fullReplace', []),
+          excludeUpdate = _.get(schema, 'exclude.update', [])
         if (_.isPlainObject(result) && result.body)
           body = result.body
         _.forOwn(schema.behavior, (v, k) => {
-          if (['updatedAt'].indexOf(k) > -1)
+          if (['updatedAt'].indexOf(k) > -1) {
             body[v] = new Date()
+            excludeFullReplace.push(v)
+          }
+          if (['createdAt'].indexOf(k) > -1) {
+            excludeFullReplace.push(v)
+          }
         })
-        return dab.update(id, body, options)
+        excludeFullReplace = _.uniq(excludeFullReplace)
+        body = _.omit(body, excludeUpdate)
+        return dab.update(id, body, helper('core:merge')(options, { fullReplaceExclude: excludeFullReplace }))
       })
       .then(result => {
         finalResult = result
