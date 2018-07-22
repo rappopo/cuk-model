@@ -3,6 +3,7 @@
 module.exports = function(cuk) {
   const { _, helper } = cuk.pkg.core.lib
   const skips = ['skipHook', 'skipValidation']
+  const findForUniq = require('./_find_for_uniq')(cuk)
 
   return (name, body = {}, params = {}) => {
     return new Promise((resolve, reject) => {
@@ -11,6 +12,14 @@ module.exports = function(cuk) {
         schema = helper('model:getSchema')(name)
       let finalResult
       const dab = helper('model:getDab')(name)
+
+      let uniques = [], uniquesName = []
+      _.forOwn(dab.collection[options.collection].indexes, (idx, idxName) => {
+        if (!idx.unique) return
+        uniques.push(idx)
+        uniquesName.push(idxName)
+      })
+
       Promise.resolve()
       .then(()=> {
         if (_.get(optionsSkip, 'skipHook.all') || _.get(optionsSkip, 'skipHook.beforeValidate')) return
@@ -21,7 +30,22 @@ module.exports = function(cuk) {
           body = result.body
         if (optionsSkip.skipValidation) return
         const e = dab.validateDoc(body, options)
-        if (e) return reject(e)
+        if (e) throw helper('core:makeError')(e)
+        return Promise.map(uniques, u => {
+          return findForUniq(dab, options.collection, body, u)
+        })
+      })
+      .then(result => {
+        if (result.length > 0) {
+          let err = []
+          _.each(result, (r, i) => {
+            if (r !== 0) err.push(uniquesName[i])
+          })
+          if (err.length > 0) throw helper('core:makeError')({
+            msg: 'Unique constraint failed: ' + err.join(','),
+            status: 406
+          })
+        }
         if (_.get(optionsSkip, 'skipHook.all') || _.get(optionsSkip, 'skipHook.afterValidate')) return
         return helper('model:getHook')(name, 'afterValidate')(body, options)
       })

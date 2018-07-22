@@ -9,6 +9,6 @@
   "author": "Ardhi Lukianto <ardhi@lukianto.com>",
   "license": "MIT",
   "dependencies": {
-    "@rappopo/dab-memory": "^0.6.2"
+    "@rappopo/dab-memory": "^0.6.4"
   }
 }
