@@ -6,7 +6,7 @@ module.exports = function(cuk) {
     id: 'model',
     level: 6,
     lib: {
-      validator: require('validator'),
+      validation: require('@rappopo/dab/validation'),
       dabMemory: require('@rappopo/dab-memory')
     }
   })

@@ -7,8 +7,10 @@ module.exports = function(cuk) {
     return new Promise((resolve, reject) => {
       let query = {}
       _.each(index.column, c => {
+        if (!helper('core:isSet')(body[c])) return
         query[c] = body[c]
       })
+      if (_.isEmpty(query)) return resolve(0)
       dab.find({ query: query, limit: limit, collection: collection })
       .then(result => {
         resolve(result.data.length)

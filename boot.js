@@ -6,6 +6,8 @@ module.exports = function(cuk){
     cfg = pkg.cfg.common
   const { _, debug, helper, path, fs } = cuk.pkg.core.lib
 
+  pkg.lib.CukModelValidationError = require('./lib/class_validation_error')(cuk)
+
   return new Promise((resolve, reject) => {
     require('./lib/make_connector')(cuk)
     .then(() => {
