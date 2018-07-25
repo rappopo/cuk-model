@@ -4,7 +4,7 @@ module.exports = function(cuk) {
   const { _, helper } = cuk.pkg.core.lib
 
   return function(name, follow = true) {
-    let names = helper('core:pkgSplitToken')(name, 'Invalid model connector (%s)')
+    let names = helper('core:pkgTokenSplit')(name, 'Invalid model connector (%s)')
     let conn = _.get(cuk.pkg[names[0]], `cuks.model.connector.${names[1]}`)
     if (!conn) return
     if (follow && _.isString(conn))
