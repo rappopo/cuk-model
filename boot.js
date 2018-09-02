@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = function(cuk){
+module.exports = function (cuk){
   let id = 'model',
     pkg = cuk.pkg[id],
     cfg = pkg.cfg.common

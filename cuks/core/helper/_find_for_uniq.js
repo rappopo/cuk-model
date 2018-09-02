@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = function(cuk) {
+module.exports = function (cuk) {
   const { _, helper } = cuk.pkg.core.lib
 
   return (dab, collection, body, index, limit = 2) => { // set for more than 1
@@ -15,7 +15,7 @@ module.exports = function(cuk) {
       .then(result => {
         resolve(result.data.length)
       })
-      .catch(e => {
+      .catch (e => {
         resolve(-1)
       })
     })
