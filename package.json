@@ -1,6 +1,6 @@
 {
   "name": "@rappopo/cuk-model",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Rappopo CUK Database Model",
   "main": "index.js",
   "scripts": {
@@ -8,6 +8,10 @@
   },
   "author": "Ardhi Lukianto <ardhi@lukianto.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rappopo/cuk-model.git"
+  },
   "dependencies": {
     "@rappopo/dab-memory": "^0.6.5"
   }
