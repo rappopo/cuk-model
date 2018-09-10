@@ -13,7 +13,7 @@ $ npm install --save @rappopo/cuk-model
 ```
 
 ## Links
-* [Wiki](wiki)
+* [Wiki](https://github.com/rappopo/cuk-model/wiki)
 * [Documentation](https://docs.rappopo.com/cuk/)
 * [Changelog](CHANGELOG.md)
 
