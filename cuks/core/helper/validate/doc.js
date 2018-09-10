@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = function (cuk) {
-  const { _, helper, path } = cuk.pkg.core.lib
+  const { _, helper } = cuk.pkg.core.lib
 
   return (name, body = {}, ignore = []) => {
     const { CukModelValidationError } = cuk.pkg.model.lib

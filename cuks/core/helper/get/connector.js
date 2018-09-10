@@ -7,9 +7,7 @@ module.exports = function (cuk) {
     let names = helper('core:pkgTokenSplit')(name, 'Invalid model connector (%s)')
     let conn = _.get(cuk.pkg[names[0]], `cuks.model.connector.${names[1]}`)
     if (!conn) return
-    if (follow && _.isString(conn))
-      conn = helper('model:getConnector')(conn, follow)
+    if (follow && _.isString(conn)) conn = helper('model:getConnector')(conn, follow)
     return conn
   }
-
 }

@@ -1,5 +1,10 @@
 ## Changelog
 
+### 0.0.4
+
+- Standard JS
+- Schema overload
+
 ### 0.0.3
 
 - Adding README.md, LICENSE.md & CHANGELOG.md

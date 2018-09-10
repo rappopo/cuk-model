@@ -7,11 +7,11 @@ module.exports = function (cuk) {
     return new Promise((resolve, reject) => {
       let options = helper('core:merge')(params, { collection: _.snakeCase(name) })
       helper('model:getDab')(name)
-      .copyTo(dest, options)
-      .then(result => {
-        resolve(result)
-      })
-      .catch(reject)
+        .copyTo(dest, options)
+        .then(result => {
+          resolve(result)
+        })
+        .catch(reject)
     })
   }
 }

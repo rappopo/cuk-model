@@ -12,15 +12,12 @@ module.exports = function (cuk) {
       })
       if (_.isEmpty(query)) return resolve(0)
       dab.find({ query: query, limit: limit, collection: collection })
-      .then(result => {
-        resolve(result.data.length)
-      })
-      .catch (e => {
-        resolve(-1)
-      })
+        .then(result => {
+          resolve(result.data.length)
+        })
+        .catch(e => {
+          resolve(-1)
+        })
     })
   }
-
 }
-
-

@@ -12,9 +12,8 @@ Invoke this command in your CUK project directory:
 $ npm install --save @rappopo/cuk-model
 ```
 
-
 ## Links
-
+* [Wiki](wiki)
 * [Documentation](https://docs.rappopo.com/cuk/)
 * [Changelog](CHANGELOG.md)
 
