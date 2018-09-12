@@ -3,7 +3,8 @@
 ### 0.0.4
 
 - Standard JS
-- Schema overload
+- Add feature: extending model schema, fixture & hooks
+- Start writing wiki for docs
 
 ### 0.0.3
 
