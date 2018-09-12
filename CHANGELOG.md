@@ -1,5 +1,9 @@
 ## Changelog
 
+### 0.0.5
+
+- Rewrite schema extends with core:configExtend
+
 ### 0.0.4
 
 - Standard JS
