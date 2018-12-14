@@ -1,6 +1,6 @@
 {
   "name": "@rappopo/cuk-model",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Rappopo CUK Database Model",
   "main": "index.js",
   "scripts": {

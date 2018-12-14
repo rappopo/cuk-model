@@ -1,10 +1,8 @@
 {
-  "common": {
-    "bulkOnRebuild": false,
-    "skipAllHooks": false,
-    "default": {
-      "limit": 25,
-      "page": 1
-    }
+  "bulkOnRebuild": false,
+  "skipAllHooks": false,
+  "default": {
+    "limit": 25,
+    "page": 1
   }
 }

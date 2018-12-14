@@ -1,8 +1,13 @@
 ## Changelog
 
+### 0.0.8
+
+- Break change: config root no longer use common & cuks.
+
 ### 0.0.6
 
 - Use REBUILD to also rebuild database schema & index
+
 
 ### 0.0.5
 
