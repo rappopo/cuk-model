@@ -3,6 +3,7 @@
 ### 0.0.8
 
 - Break change: config root no longer use common & cuks.
+- Reconfigure everything to boot from Cuks Folder
 
 ### 0.0.6
 

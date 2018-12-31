@@ -33,6 +33,9 @@ module.exports = function (cuk) {
         })
         .then(result => {
           if (_.isPlainObject(result) && result.body) body = _.omit(result.body, excludeUpdate)
+          return dab.findOne(id, options)
+        })
+        .then(result => {
           if (optionsSkip.skipValidation) return
           let keys = _.keys(schema.attributes)
           let bodyKeys = _.keys(body)
@@ -41,7 +44,7 @@ module.exports = function (cuk) {
 
           if (e) throw new CukModelValidationError(e.details)
           return Promise.map(uniques, u => {
-            return findForUniq(dab, options.collection, body, u)
+            return findForUniq(dab, options.collection, body, u, result.data)
           })
         })
         .then(result => {
