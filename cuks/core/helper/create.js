@@ -4,6 +4,7 @@ module.exports = function (cuk) {
   const { _, helper } = cuk.pkg.core.lib
   const skips = ['skipHook', 'skipValidation']
   const findForUniq = require('./_find_for_uniq')(cuk)
+  const isMultisite = require('./_is_multisite')(cuk)
 
   return (name, body = {}, params = {}) => {
     const { CukModelValidationError } = cuk.pkg.model.lib
@@ -12,6 +13,7 @@ module.exports = function (cuk) {
       const options = helper('core:merge')(_.omit(params, skips), { collection: _.snakeCase(name) })
       const optionsSkip = _.pick(params, skips)
       const schema = helper('model:getSchema')(name)
+      if (isMultisite(name, options)) body.site = options.site
       let finalResult
       const dab = helper('model:getDab')(name)
 
@@ -58,6 +60,7 @@ module.exports = function (cuk) {
           _.forOwn(schema.behavior, (v, k) => {
             if (['createdAt', 'updatedAt'].indexOf(k) > -1) body[v] = new Date()
           })
+          if (isMultisite(name, options)) body.site = options.site
           return dab.create(body, options)
         })
         .then(result => {

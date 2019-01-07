@@ -17,6 +17,9 @@ module.exports = function (cuk) {
         })
         .then(result => {
           if (_.isPlainObject(result) && result.id) id = result.id
+          return helper('model:findOne')(name, id, options)
+        })
+        .then(result => {
           return dab.remove(id, options)
         })
         .then(result => {
