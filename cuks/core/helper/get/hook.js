@@ -4,7 +4,7 @@ module.exports = function (cuk) {
   const { _, helper } = cuk.pkg.core.lib
 
   return (name, hook) => {
-    const names = helper('core:pkgTokenSplit')(name)
+    const names = helper('core:splitName')(name)
     const arr = _.get(cuk.pkg[names[0]], `cuks.model.hook.${names[1]}.${hook}`)
     if (!arr) return (...args) => Promise.resolve(true)
     return (...args) => {

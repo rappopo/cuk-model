@@ -1,5 +1,10 @@
 ## Changelog
 
+### 0.0.9
+
+- Fix index
+- Auto index for created_at & updated_at behavior
+
 ### 0.0.8
 
 - Break change: config root no longer use common & cuks.
