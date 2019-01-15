@@ -6,15 +6,15 @@ module.exports = function (cuk) {
   pkg.lib.CukModelValidationError = require('./lib/class_validation_error')(cuk)
 
   return new Promise((resolve, reject) => {
-    require('./lib/make_connector')(cuk)
+    require('./lib/init/connector')(cuk)
       .then(() => {
-        return require('./lib/make_model')(cuk)
+        return require('./lib/init/schema')(cuk)
       })
       .then(() => {
-        return require('./lib/make_hook')(cuk)
+        return require('./lib/init/hook')(cuk)
       })
       .then(() => {
-        return require('./lib/make_fixture')(cuk)
+        return require('./lib/init/fixture')(cuk)
       })
       .then(() => {
         resolve(true)

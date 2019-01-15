@@ -4,6 +4,8 @@
 
 - Fix index
 - Auto index for created_at & updated_at behavior
+- Renaming files to be aligned with files from all @rappopo/cuk-* family
+- Porting all init procedures as function helpers so they can be used by other modules as well
 
 ### 0.0.8
 
