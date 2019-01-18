@@ -12,7 +12,7 @@ module.exports = function (cuk) {
       const options = helper('core:merge')(_.omit(params, skips), { collection: _.snakeCase(name) })
       const optionsSkip = _.pick(params, skips)
       const schema = helper('model:getSchema')(name)
-      if (isMultisite(name, options)) body.site = options.site
+      body.site = isMultisite(name, options) ? options.site : 'default'
       let finalResult
       const dab = helper('model:getDab')(name)
 

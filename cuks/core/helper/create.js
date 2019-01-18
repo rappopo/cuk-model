@@ -13,7 +13,10 @@ module.exports = function (cuk) {
       const options = helper('core:merge')(_.omit(params, skips), { collection: _.snakeCase(name) })
       const optionsSkip = _.pick(params, skips)
       const schema = helper('model:getSchema')(name)
-      if (isMultisite(name, options)) body.site = options.site
+      _.forOwn(schema.behavior, (v, k) => {
+        delete body[v]
+      })
+      body.site = isMultisite(name, options) ? options.site : 'default'
       let finalResult
       const dab = helper('model:getDab')(name)
 
@@ -24,7 +27,6 @@ module.exports = function (cuk) {
         uniques.push(idx)
         uniquesName.push(idxName)
       })
-
       Promise.resolve()
         .then(() => {
           if (_.get(optionsSkip, 'skipHook.all') || _.get(optionsSkip, 'skipHook.beforeValidate')) return
@@ -32,7 +34,8 @@ module.exports = function (cuk) {
         })
         .then(result => {
           if (_.isPlainObject(result) && result.body) body = result.body
-          if (optionsSkip.skipValidation) return
+          if (optionsSkip.skipValidation === 'all') return
+          if (_.isArray(optionsSkip.skipValidation)) options.ignoreColumn = optionsSkip.skipValidation
           const e = dab.validateDoc(body, options)
           if (e) throw new CukModelValidationError(e.details)
           return Promise.map(uniques, u => {

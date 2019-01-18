@@ -10,6 +10,9 @@ module.exports = function (cuk) {
       const optionsSkip = _.pick(params, skips)
       let finalResult
       const dab = helper('model:getDab')(name)
+      if (params.bulkRemove === true) params.bulkRemove = { idSeparator: ',' }
+      let bulk = params.bulkRemove ? (id + '').split(params.bulkRemove.idSeparator) : false
+      if (bulk && bulk.length === 1 && params.bulkRemove.forceSingle) bulk = false
       Promise.resolve()
         .then(() => {
           if (_.get(optionsSkip, 'skipHook.all') || _.get(optionsSkip, 'skipHook.beforeRemove')) return
@@ -17,9 +20,11 @@ module.exports = function (cuk) {
         })
         .then(result => {
           if (_.isPlainObject(result) && result.id) id = result.id
+          if (bulk) return true
           return helper('model:findOne')(name, id, options)
         })
         .then(result => {
+          if (bulk) return dab.bulkRemove(bulk, options)
           return dab.remove(id, options)
         })
         .then(result => {

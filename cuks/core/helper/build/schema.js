@@ -4,10 +4,11 @@ module.exports = function (cuk) {
   const { _, helper } = cuk.pkg.core.lib
 
   return (name, params, autoCreateConnector, verbose) => {
+    const defConnector = helper('core:config')('model', 'default.connector')
     let names = helper('core:splitName')(name)
     let createDefConnector = false
     if (_.get(names[2], 'cuks.model.schema.' + names[1])) throw helper('core:makeError')('Name used already')
-    if (!params.connector) params.connector = `model:default`
+    if (!params.connector) params.connector = defConnector || 'model:default'
     let conn = helper('model:getConnector')(params.connector)
     if (!conn) {
       if (!autoCreateConnector) {
