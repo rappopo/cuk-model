@@ -5,6 +5,7 @@ module.exports = function (cuk) {
   const skips = ['skipHook', 'skipValidation']
   const findForUniq = require('./_find_for_uniq')(cuk)
   const isMultisite = require('./_is_multisite')(cuk)
+  const isOwnershipAware = require('./_is_ownership_aware')(cuk)
 
   return (name, id, body = {}, params = {}) => {
     const { CukModelValidationError } = cuk.pkg.model.lib
@@ -12,7 +13,7 @@ module.exports = function (cuk) {
       const options = helper('core:merge')(_.omit(params, skips), { collection: _.snakeCase(name) })
       const optionsSkip = _.pick(params, skips)
       const schema = helper('model:getSchema')(name)
-      body.site = isMultisite(name, options) ? options.site : 'default'
+      body.site_id = isMultisite(name, options) ? options.site : 'default'
       let finalResult
       const dab = helper('model:getDab')(name)
 
@@ -78,7 +79,8 @@ module.exports = function (cuk) {
             }
           })
           excludeFullReplace = _.uniq(excludeFullReplace)
-          if (isMultisite(name, options)) body.site = options.site
+          if (_.has(body, 'site_id') && isMultisite(name, options)) body.site_id = options.site
+          if (_.has(body, 'owner_id') && isOwnershipAware(name, options)) body.owner_id = options.owner
           return dab.update(id, body, helper('core:merge')(options, { fullReplaceExclude: excludeFullReplace }))
         })
         .then(result => {

@@ -3,13 +3,18 @@
 module.exports = function (cuk) {
   const { _, helper } = cuk.pkg.core.lib
   const isMultisite = require('./_is_multisite')(cuk)
+  const isOwnershipAware = require('./_is_ownership_aware')(cuk)
 
   return (name, id, params = {}) => {
     return new Promise((resolve, reject) => {
       const idCol = helper('model:getIdColumn')(name)
       let options = helper('core:merge')(params, { collection: _.snakeCase(name) })
-      if (isMultisite(name, options)) {
-        options.query = { site: options.site }
+      const multisite = isMultisite(name, options)
+      const ownershipAware = isOwnershipAware(name, options)
+      if (multisite || ownershipAware) {
+        options.query = {}
+        if (multisite) options.query.site_id = options.site
+        if (ownershipAware) options.query.owner_id = options.owner
         options.query[idCol] = id
         helper('model:getDab')(name)
           .find(options)

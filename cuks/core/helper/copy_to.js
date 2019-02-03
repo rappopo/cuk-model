@@ -2,6 +2,7 @@
 
 module.exports = function (cuk) {
   const { _, helper } = cuk.pkg.core.lib
+  // TODO: multisite & ownership awareness
 
   return (name, dest, params = {}) => {
     return new Promise((resolve, reject) => {

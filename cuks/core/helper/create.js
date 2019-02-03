@@ -5,6 +5,7 @@ module.exports = function (cuk) {
   const skips = ['skipHook', 'skipValidation']
   const findForUniq = require('./_find_for_uniq')(cuk)
   const isMultisite = require('./_is_multisite')(cuk)
+  const isOwnershipAware = require('./_is_ownership_aware')(cuk)
 
   return (name, body = {}, params = {}) => {
     const { CukModelValidationError } = cuk.pkg.model.lib
@@ -16,7 +17,8 @@ module.exports = function (cuk) {
       _.forOwn(schema.behavior, (v, k) => {
         delete body[v]
       })
-      body.site = isMultisite(name, options) ? options.site : 'default'
+      body.site_id = isMultisite(name, options) ? options.site : 'default'
+      if (isOwnershipAware(name, options)) body.owner_id = options.owner
       let finalResult
       const dab = helper('model:getDab')(name)
 
@@ -63,7 +65,7 @@ module.exports = function (cuk) {
           _.forOwn(schema.behavior, (v, k) => {
             if (['createdAt', 'updatedAt'].indexOf(k) > -1) body[v] = new Date()
           })
-          if (isMultisite(name, options)) body.site = options.site
+          if (isMultisite(name, options)) body.site_id = options.site
           return dab.create(body, options)
         })
         .then(result => {

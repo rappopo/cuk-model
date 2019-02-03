@@ -6,7 +6,7 @@ module.exports = function (cuk) {
   return (name, params) => {
     try {
       const schema = helper('model:getSchema')(name)
-      return cuk.pkg.site && _.has(schema.attributes, 'site_id') && params.site
+      return _.has(schema.attributes, 'owner_id') && params.owner
     } catch (e) {
       return false
     }

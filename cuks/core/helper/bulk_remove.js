@@ -3,6 +3,7 @@
 module.exports = function (cuk) {
   const { _, helper } = cuk.pkg.core.lib
   const skips = ['skipHook', 'skipValidation']
+  // TODO: multisite & ownership awareness
 
   return (name, body, params = {}) => {
     return new Promise((resolve, reject) => {
